@@ -8,23 +8,23 @@
 open! Sexplib.Conv
 open Tree_sitter_run
 
-type field_sep = [ `COMMA of Token.t (* "," *) | `SEMI of Token.t (* ";" *) ]
-[@@deriving sexp_of]
-
 type number = Token.t
-[@@deriving sexp_of]
-
-type identifier = Token.t (* pattern \$?[a-zA-Z_][a-zA-Z0-9_]* *)
-[@@deriving sexp_of]
 
 type global_variable = [
     `X__G of Token.t (* "_G" *)
   | `X__VERSION of Token.t (* "_VERSION" *)
 ]
-[@@deriving sexp_of]
+
+type field_sep = [ `COMMA of Token.t (* "," *) | `SEMI of Token.t (* ";" *) ]
+
+type identifier = Token.t (* pattern \$?[a-zA-Z_][a-zA-Z0-9_]* *)
 
 type string_ = Token.t
-[@@deriving sexp_of]
+
+type local_variable_declarator = (
+    identifier (*tok*)
+  * (Token.t (* "," *) * identifier (*tok*)) list (* zero or more *)
+)
 
 type parameters = (
     Token.t (* "(" *)
@@ -40,25 +40,16 @@ type parameters = (
       option
   * Token.t (* ")" *)
 )
-[@@deriving sexp_of]
-
-type local_variable_declarator = (
-    identifier (*tok*)
-  * (Token.t (* "," *) * identifier (*tok*)) list (* zero or more *)
-)
-[@@deriving sexp_of]
 
 type function_name_field = (
     identifier (*tok*)
   * (Token.t (* "." *) * identifier (*tok*)) list (* zero or more *)
 )
-[@@deriving sexp_of]
 
 type function_name = (
     [ `Id of identifier (*tok*) | `Func_name_field of function_name_field ]
   * (Token.t (* ":" *) * identifier (*tok*)) option
 )
-[@@deriving sexp_of]
 
 type anon_exp_rep_COMMA_exp_0bb260c = (
     expression
@@ -286,47 +277,34 @@ and variable_declarator = [
     )
   | `Field_exp of (prefix * Token.t (* "." *) * identifier (*tok*))
 ]
-[@@deriving sexp_of]
 
 type program = (statement list (* zero or more *) * return_statement option)
-[@@deriving sexp_of]
 
 type self (* inlined *) = Token.t (* "self" *)
-[@@deriving sexp_of]
-
-type spread (* inlined *) = Token.t (* "..." *)
-[@@deriving sexp_of]
-
-type break_statement (* inlined *) = Token.t (* "break" *)
-[@@deriving sexp_of]
 
 type false_ (* inlined *) = Token.t (* "false" *)
-[@@deriving sexp_of]
-
-type empty_statement (* inlined *) = Token.t (* ";" *)
-[@@deriving sexp_of]
 
 type nil (* inlined *) = Token.t (* "nil" *)
-[@@deriving sexp_of]
+
+type break_statement (* inlined *) = Token.t (* "break" *)
+
+type empty_statement (* inlined *) = Token.t (* ";" *)
 
 type true_ (* inlined *) = Token.t (* "true" *)
-[@@deriving sexp_of]
 
 type next (* inlined *) = Token.t (* "next" *)
-[@@deriving sexp_of]
+
+type spread (* inlined *) = Token.t (* "..." *)
 
 type comment (* inlined *) = Token.t
-[@@deriving sexp_of]
 
 type label_statement (* inlined *) = (
     Token.t (* "::" *) * identifier (*tok*) * Token.t (* "::" *)
 )
-[@@deriving sexp_of]
 
 type goto_statement (* inlined *) = (
     Token.t (* "goto" *) * identifier (*tok*)
 )
-[@@deriving sexp_of]
 
 type do_statement (* inlined *) = (
     Token.t (* "do" *)
@@ -334,12 +312,10 @@ type do_statement (* inlined *) = (
   * return_statement option
   * Token.t (* "end" *)
 )
-[@@deriving sexp_of]
 
 type field_expression (* inlined *) = (
     prefix * Token.t (* "." *) * identifier (*tok*)
 )
-[@@deriving sexp_of]
 
 type for_in_statement (* inlined *) = (
     Token.t (* "for" *)
@@ -349,7 +325,6 @@ type for_in_statement (* inlined *) = (
   * return_statement option
   * Token.t (* "end" *)
 )
-[@@deriving sexp_of]
 
 type for_statement (* inlined *) = (
     Token.t (* "for" *)
@@ -359,17 +334,14 @@ type for_statement (* inlined *) = (
   * return_statement option
   * Token.t (* "end" *)
 )
-[@@deriving sexp_of]
 
 type function_definition (* inlined *) = (
     Token.t (* "function" *) * function_body
 )
-[@@deriving sexp_of]
 
 type function_statement (* inlined *) = (
     Token.t (* "function" *) * function_name * function_body
 )
-[@@deriving sexp_of]
 
 type if_statement (* inlined *) = (
     Token.t (* "if" *)
@@ -381,13 +353,11 @@ type if_statement (* inlined *) = (
   * else_ option
   * Token.t (* "end" *)
 )
-[@@deriving sexp_of]
 
 type local_function_statement (* inlined *) = (
     Token.t (* "local" *) * Token.t (* "function" *) * identifier (*tok*)
   * function_body
 )
-[@@deriving sexp_of]
 
 type local_variable_declaration (* inlined *) = (
     Token.t (* "local" *)
@@ -399,7 +369,6 @@ type local_variable_declaration (* inlined *) = (
     )
       option
 )
-[@@deriving sexp_of]
 
 type repeat_statement (* inlined *) = (
     Token.t (* "repeat" *)
@@ -408,7 +377,6 @@ type repeat_statement (* inlined *) = (
   * Token.t (* "until" *)
   * expression
 )
-[@@deriving sexp_of]
 
 type unary_operation (* inlined *) = (
     [
@@ -419,7 +387,6 @@ type unary_operation (* inlined *) = (
     ]
   * expression
 )
-[@@deriving sexp_of]
 
 type variable_declaration (* inlined *) = (
     variable_declarator
@@ -428,7 +395,6 @@ type variable_declaration (* inlined *) = (
   * expression
   * (Token.t (* "," *) * expression) list (* zero or more *)
 )
-[@@deriving sexp_of]
 
 type while_statement (* inlined *) = (
     Token.t (* "while" *)
@@ -438,8 +404,3 @@ type while_statement (* inlined *) = (
   * return_statement option
   * Token.t (* "end" *)
 )
-[@@deriving sexp_of]
-
-let dump_tree root =
-  sexp_of_program root
-  |> Print_sexp.to_stdout
