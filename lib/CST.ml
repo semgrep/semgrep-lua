@@ -404,3 +404,7 @@ type while_statement (* inlined *) = (
   * return_statement option
   * Token.t (* "end" *)
 )
+
+type extra = Comment of Loc.t * comment
+
+type extras = extra list
