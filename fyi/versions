@@ -2,25 +2,25 @@ File: semgrep-grammars/src/tree-sitter-lua/LICENSE.md
 Git repo name: tree-sitter-lua
 Latest commit in repo: a943944ec09c5e96f455bb166079de4ef3534457
 Last change in file:
-  commit 79b8ba5ed7e059405b8f203f8ea691bef15cf6e5
-  Author: Ademir J. Ferreira Júnior <ademirj.ferreirajunior@gmail.com>
-  Date:   Sat Jul 11 20:40:44 2020 -0300
+  commit a943944ec09c5e96f455bb166079de4ef3534457
+  Author: Ademir J. Ferreira Junior <ademirj.ferreirajunior@gmail.com>
+  Date:   Sun Dec 27 00:15:24 2020 -0300
   
-      Update info and config
+      1.6.2
 ---
 File: semgrep-grammars/src/tree-sitter-lua/grammar.js
 Git repo name: tree-sitter-lua
 Latest commit in repo: a943944ec09c5e96f455bb166079de4ef3534457
 Last change in file:
-  commit bfc842205bbacca1cba887e5bb18bcdce7590030
-  Author: Ademir J. Ferreira Júnior <ademirj.ferreirajunior@gmail.com>
-  Date:   Sat Jul 11 20:46:58 2020 -0300
+  commit a943944ec09c5e96f455bb166079de4ef3534457
+  Author: Ademir J. Ferreira Junior <ademirj.ferreirajunior@gmail.com>
+  Date:   Sun Dec 27 00:15:24 2020 -0300
   
-      Reformat grammar.js
+      1.6.2
 ---
 File: semgrep-grammars/src/semgrep-lua/grammar.js
 Git repo name: ocaml-tree-sitter-semgrep
-Latest commit in repo: 62c59803ce966ac00210b5ed8aa163a926f7eaad
+Latest commit in repo: dea26c1d0d5b007958b27d072c544f642af0af43
 Last change in file:
   commit 1cfa0a2c63a1218cf7752cb1504689eed2511548
   Merge: e5e0c02 dbc2761
